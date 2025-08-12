@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Out of Line — منصة شبابية</title>
+  <meta name="description" content="Out of Line منصة شبابية تقدم محتوى واقعي، فرص تعليمية، وكورسات عملية. انضم وابدأ رحلتك.">
+  <style>
+    :root {
+      --ol-dark: #003366;
+      --ol-mid: #0B5ED7;
+      --ol-light: #3399FF;
+      --accent-green: #25D366;
+      --muted: #6b7280;
+      --shadow-sm: 0 4px 6px rgba(0,0,0,0.05);
+      --shadow-md: 0 10px 15px rgba(0,0,0,0.08);
+      --shadow-lg: 0 20px 25px rgba(0,0,0,0.12);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: linear-gradient(180deg, #f7fbff 0%, #f0f6ff 100%);
+      color: #07122a;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      line-height: 1.65;
+    }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+    
+    /* Header */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid rgba(3, 37, 65, 0.06);
+      transition: all 0.3s ease;
+    }
+    .header-scrolled { box-shadow: var(--shadow-md); }
+    .nav-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 0;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .logo-box {
+      width: 64px;
+      height: 64px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, var(--ol-mid), var(--ol-light));
+      box-shadow: var(--shadow-sm);
+      transition: all 0.3s ease;
+    }
+    .logo-box:hover {
+      transform: scale(1.05);
+      box-shadow: var(--shadow-lg);
+    }
+    .brand h1 { margin: 0; font-size: 20px; color: var(--ol-dark); font-weight: 800; }
+    .brand p { margin: 0; font-size: 12px; color: var(--muted); }
+    nav.desktop { display: flex; gap: 22px; align-items: center; }
+    nav.desktop a {
+      color: var(--muted);
+      text-decoration: none;
+      font-weight: 600;
+      position: relative;
+      padding: 5px 0;
+    }
+    nav.desktop a:after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 0;
+      height: 2px;
+      background: var(--ol-mid);
+      transition: width 0.3s ease;
+    }
+    nav.desktop a:hover:after,
+    nav.desktop a.active:after { width: 100%; left: 0; }
+    nav.desktop a:hover,
+    nav.desktop a.active { color: var(--ol-mid); }
+    .cta {
+      background: linear-gradient(90deg, var(--ol-mid), var(--ol-light));
+      color: #fff;
+      padding: 10px 16px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 700;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.3s ease;
+      display: inline-block;
+    }
+    .cta:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+    }
+    .mobile-btn {
+      display: none;
+      font-size: 22px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .mobile-btn:hover { opacity: 0.8; }
+    
+    /* Top Banner */
+    .top-banner {
+      background: linear-gradient(rgba(0, 51, 102, 0.85), rgba(0, 51, 102, 0.85)), 
+                  url('https://i.ibb.co/qYMb6M4g/top-banner.jpg') center/cover no-repeat;
+      padding: 120px 0;
+      text-align: center;
+      color: white;
+    }
+    .top-banner-content {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    .top-banner h2 {
+      font-size: 42px;
+      font-weight: 800;
+      margin-bottom: 20px;
+      color: white;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+    .top-banner p {
+      font-size: 20px;
+      margin-bottom: 30px;
+      color: rgba(255, 255, 255, 0.9);
+      line-height: 1.7;
+    }
+    
+    /* Hero */
+    .hero { padding: 80px 0; }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 520px;
+      gap: 40px;
+      align-items: center;
+    }
+    .headline {
+      font-size: 36px;
+      font-weight: 800;
+      color: var(--ol-dark);
+      margin: 0 0 18px;
+      line-height: 1.3;
+    }
+    .lead { color: var(--muted); font-size: 18px; margin: 0 0 22px; line-height: 1.7; }
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: #fff;
+      border: 1px solid rgba(11, 94, 215, 0.06);
+      transition: all 0.3s ease;
+    }
+    .pill:hover { transform: translateY(-3px); box-shadow: var(--shadow-sm); }
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 26px;
+    }
+    .feature {
+      background: #fff;
+      padding: 14px;
+      border-radius: 10px;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.3s ease;
+    }
+    .feature:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-md);
+    }
+    .feature h4 { margin: 0; color: var(--ol-dark); font-weight: 700; }
+    .feature p { margin: 6px 0 0; color: var(--muted); font-size: 14px; }
+    
+    /* Hero visual */
+    .hero-card {
+      border-radius: 16px;
+      padding: 26px;
+      background: linear-gradient(135deg, var(--ol-mid), var(--ol-light));
+      color: #fff;
+      box-shadow: var(--shadow-lg);
+      transform: translateY(0);
+      transition: all 0.5s ease;
+      animation: float 6s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    .hero-card h3 { margin: 0; font-size: 20px; }
+    .hero-card p { color: rgba(255, 255, 255, 0.9); margin-top: 8px; line-height: 1.7; }
+    .hero-card .small { font-size: 13px; margin-top: 12px; }
+    
+    /* Sections */
+    section { padding: 80px 0; }
+    h2.section-title {
+      font-size: 32px;
+      color: var(--ol-dark);
+      margin: 0 0 15px;
+      font-weight: 800;
+      position: relative;
+      display: inline-block;
+    }
+    h2.section-title:after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      right: 0;
+      width: 60px;
+      height: 4px;
+      background: var(--ol-mid);
+      border-radius: 3px;
+    }
+    p.lead-sm { color: var(--muted); margin: 0 0 25px; font-size: 18px; line-height: 1.7; }
+    .grid { display: grid; gap: 25px; }
+    .grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+    .grid.cols-4 { grid-template-columns: repeat(4, 1fr); }
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-lg);
+    }
+    .card img { width: 100%; height: 200px; object-fit: cover; border-radius: 10px; }
+    .card h3 { margin: 15px 0 8px; color: var(--ol-dark); font-size: 20px; }
+    .card p { color: var(--muted); font-size: 15px; margin: 0; line-height: 1.7; }
+    .btn-ghost {
+      background: transparent;
+      border: 1px solid var(--ol-mid);
+      color: var(--ol-mid);
+      padding: 12px 18px;
+      border-radius: 8px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      display: inline-block;
+      font-size: 16px;
+    }
+    .btn-ghost:hover {
+      background: rgba(11, 94, 215, 0.05);
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-sm);
+    }
+    .btn-green {
+      background: var(--accent-green);
+      color: #fff;
+      padding: 12px 18px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 700;
+      transition: all 0.3s ease;
+      display: inline-block;
+      font-size: 16px;
+    }
+    .btn-green:hover {
+      background: #20b859;
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-sm);
+    }
+    
+    /* About articles */
+    .about-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; }
+    .about-article {
+      padding: 25px;
+      border-radius: 12px;
+      background: #fff;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.3s ease;
+    }
+    .about-article:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-md);
+    }
+    .about-article h4 { margin: 0 0 10px; color: var(--ol-mid); font-size: 20px; }
+    .about-article p { line-height: 1.7; font-size: 16px; }
+    
+    /* Fields list */
+    .fields-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; }
+    .field-card {
+      border-radius: 12px;
+      overflow: hidden;
+      background: #fff;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.3s ease;
+    }
+    .field-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-lg);
+    }
+    .field-card .field-media { height: 200px; object-fit: cover; width: 100%; transition: all 0.5s ease; }
+    .field-card:hover .field-media { transform: scale(1.05); }
+    .field-body { padding: 20px; }
+    .field-body h4 { margin: 0; color: var(--ol-dark); font-size: 20px; }
+    .field-body p { color: var(--muted); font-size: 15px; margin-top: 10px; line-height: 1.7; }
+    
+    /* courses */
+    .courses-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; }
+    .course-card {
+      border-radius: 12px;
+      overflow: hidden;
+      background: #fff;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      transition: all 0.3s ease;
+    }
+    .course-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-lg);
+    }
+    .course-card .course-media { height: 200px; object-fit: cover; width: 100%; transition: all 0.5s ease; }
+    .course-card:hover .course-media { transform: scale(1.05); }
+    .course-body { padding: 20px; flex: 1; }
+    .course-body h3 { margin-top: 0; font-size: 20px; }
+    .course-footer { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; border-top: 1px solid #f1f5f9; }
+    
+    /* Mid Banner */
+    .mid-banner {
+      background: linear-gradient(rgba(0, 51, 102, 0.8), rgba(0, 51, 102, 0.8)), 
+                  url('https://i.ibb.co/SZrbggx/banner.jpg') center/cover no-repeat;
+      padding: 100px 0;
+      text-align: center;
+      border-radius: 16px;
+      margin: 40px 0;
+      color: white;
+    }
+    .mid-banner-content {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    .mid-banner-logo {
+      max-width: 220px;
+      margin: 0 auto 20px;
+      display: block;
+    }
+    .mid-banner h3 {
+      font-size: 36px;
+      margin-bottom: 20px;
+      color: white;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+    .mid-banner p {
+      font-size: 18px;
+      margin-bottom: 30px;
+      color: rgba(255, 255, 255, 0.9);
+      line-height: 1.7;
+    }
+    .join-btn {
+      display: inline-block;
+      background: transparent;
+      border: 2px solid white;
+      padding: 14px 35px;
+      border-radius: 50px;
+      color: white;
+      font-weight: 700;
+      font-size: 18px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      margin-top: 20px;
+    }
+    .join-btn:hover {
+      background: white;
+      color: var(--ol-dark);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+    
+    /* contact */
+    .contact-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; }
+    .contact-card {
+      background: #fff;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+    .contact-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-lg);
+    }
+    .contact-card h4 {
+      margin: 0 0 15px;
+      color: var(--ol-dark);
+      font-size: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    .contact-card p {
+      color: var(--muted);
+      margin-bottom: 20px;
+      font-size: 16px;
+      line-height: 1.7;
+    }
+    .contact-card a {
+      display: inline-block;
+      background: var(--ol-mid);
+      color: white;
+      padding: 12px 25px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 700;
+      transition: all 0.3s ease;
+      width: 100%;
+      max-width: 220px;
+    }
+    .contact-card a:hover {
+      background: var(--ol-dark);
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+    }
+    .contact-icon {
+      width: 60px;
+      height: 60px;
+      background: rgba(11, 94, 215, 0.1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+    }
+    .contact-icon svg {
+      width: 28px;
+      height: 28px;
+      fill: var(--ol-mid);
+    }
+    
+    /* footer */
+    footer {
+      background: var(--ol-dark);
+      color: #fff;
+      padding: 80px 0 40px;
+      margin-top: 60px;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 40px;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    .muted-white { color: rgba(255, 255, 255, 0.85); line-height: 1.7; }
+    .social-links {
+      display: flex;
+      gap: 15px;
+      margin-top: 20px;
+    }
+    .social-links a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      transition: all 0.3s ease;
+    }
+    .social-links a:hover {
+      background: var(--ol-mid);
+      transform: translateY(-3px);
+    }
+    
+    /* Back to top button */
+    .back-to-top {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: var(--ol-mid);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: var(--shadow-lg);
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      z-index: 100;
+    }
+    .back-to-top.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+    .back-to-top:hover {
+      background: var(--ol-dark);
+      transform: translateY(-3px);
+    }
+    
+    /* responsive */
+    @media (max-width: 1024px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      .about-grid { grid-template-columns: repeat(2, 1fr); }
+      .fields-grid { grid-template-columns: repeat(2, 1fr); }
+      .courses-grid { grid-template-columns: repeat(2, 1fr); }
+      .contact-grid { grid-template-columns: 1fr; }
+      .top-banner { padding: 80px 0; }
+    }
+    @media (max-width: 768px) {
+      nav.desktop { display: none; }
+      .mobile-btn { display: block; }
+      .nav-row { padding: 12px 0; }
+      .about-grid { grid-template-columns: 1fr; }
+      .fields-grid { grid-template-columns: 1fr; }
+      .courses-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .top-banner h2 { font-size: 32px; }
+      .top-banner p { font-size: 18px; }
+      .mid-banner { padding: 60px 20px; }
+      .mid-banner h3 { font-size: 28px; }
+      .hero { padding: 60px 0; }
+      section { padding: 60px 0; }
+    }
+    .center { text-align: center; }
+    .mt-6 { margin-top: 24px; }
+    .mb-6 { margin-bottom: 24px; }
+    .small-muted { color: var(--muted); font-size: 14px; line-height: 1.7; }
+    html { scroll-behavior: smooth; }
+  </style>
+</head>
+<body>
+
+<header id="mainHeader">
+  <div class="container nav-row">
+    <div class="brand">
+      <div class="logo-box" aria-hidden>
+        <svg width="44" height="44" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Out of Line logo">
+          <defs>
+            <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#0B5ED7"/>
+              <stop offset="1" stop-color="#3399FF"/>
+            </linearGradient>
+          </defs>
+          <rect width="100" height="100" rx="18" fill="url(#g1)"/>
+          <text x="50%" y="58%" fill="#fff" font-family="sans-serif" font-size="48" font-weight="700" text-anchor="middle" dominant-baseline="middle">OL</text>
+        </svg>
+      </div>
+      <div>
+        <h1>Out of Line</h1>
+        <p class="small-muted">منصة شبابية — فرص، مهارات، وتجارب</p>
+      </div>
+    </div>
+
+    <nav class="desktop" role="navigation" aria-label="Main Navigation">
+      <a href="#home" class="active">الرئيسية</a>
+      <a href="#about">من نحن</a>
+      <a href="#fields">المجالات</a>
+      <a href="#courses">الكورسات</a>
+      <a href="#contact">تواصل</a>
+    </nav>
+
+    <div style="display:flex;gap:12px;align-items:center">
+      <a class="cta" href="https://forms.gle/BUGca4L9zYtT1sPD6" target="_blank" rel="noopener">سجّل استمارتك الآن</a>
+      <button class="mobile-btn" id="mobileToggle" aria-label="قائمة">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0b122a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 12h18M3 6h18M3 18h18"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div id="mobileMenu" style="display:none;border-top:1px solid rgba(3,37,65,0.04);background:rgba(255,255,255,0.98)">
+    <div class="container" style="padding:12px 0;display:flex;flex-direction:column;gap:10px">
+      <a href="#home" class="mobile-link">الرئيسية</a>
+      <a href="#about" class="mobile-link">من نحن</a>
+      <a href="#fields" class="mobile-link">المجالات</a>
+      <a href="#courses" class="mobile-link">الكورسات</a>
+      <a href="#contact" class="mobile-link">تواصل</a>
+      <a class="cta" href="https://forms.gle/BUGca4L9zYtT1sPD6" target="_blank" rel="noopener">سجّل استمارتك الآن</a>
+    </div>
+  </div>
+</header>
+
+<!-- TOP BANNER -->
+<section class="top-banner">
+  <div class="container top-banner-content">
+    <h2>ابدأ رحلتك نحو التميز المهني</h2>
+    <p>انضم إلى مجتمع Out of Line وتمتع بفرص تعليمية وتدريبية مميزة تساعدك على تطوير مهاراتك وبناء مستقبلك المهني</p>
+    <a href="#courses" class="btn-ghost">اكتشف برامجنا التدريبية</a>
+  </div>
+</section>
+
+<!-- HERO -->
+<section id="home" class="hero container">
+  <div class="hero-grid">
+    <div>
+      <h2 class="headline">اخرج برّا الخط — ابدأ تكتب سطر حياتك بنفسك</h2>
+      <p class="lead">Out of Line منصة شبابية تقدم محتوى عملي، كورسات تطبيقية، وفرص تطوع تساعدك تبني بروفايل واقعي. اشتغل على مهاراتك، اشتغل على مشاريع، وابنِ شبكتك مع فريق شبابي طموح.</p>
+
+      <div class="hero-actions">
+        <a class="cta" href="https://forms.gle/BUGca4L9zYtT1sPD6" target="_blank" rel="noopener">سجل استمارتك الآن</a>
+        <a class="btn-ghost" href="#courses">اطّلع على الكورسات</a>
+        <span class="pill"><strong class="small-muted">بدء سريع</strong></span>
+      </div>
+
+      <div class="feature-grid mt-6">
+        <div class="feature"><h4>تعلم عملي</h4><p>مشروعات عملية تمكّنك تعرض شغلك للناس.</p></div>
+        <div class="feature"><h4>شبكة داعمة</h4><p>تعاون مع شباب عندهم نفس الشغف.</p></div>
+        <div class="feature"><h4>شهادة مشاركة</h4><p>شهادة رسمية باسم Out of Line بعد الإتمام.</p></div>
+      </div>
+    </div>
+
+    <div class="hero-card">
+      <h3>Out of Line — المنصة اللي تديك دفعة</h3>
+      <p class="small">كورسات عملية — ورش تطبيقية — فريق وإمكانية تحويل العمل لمقابل مادي لاحقًا.</p>
+      <div class="mt-6">
+        <div class="small-muted">متاح الآن</div>
+        <div style="display:flex;gap:10px;margin-top:10px;flex-wrap:wrap">
+          <a class="btn-green" href="https://wa.me/message/QCEEURFDYPLYH1" target="_blank" rel="noopener" aria-label="تواصل معنا عبر واتساب">احجز مكانك</a>
+          <a class="btn-ghost" href="https://www.facebook.com/share/172VRZFZXw/" target="_blank" rel="noopener" aria-label="تابعنا على فيسبوك">تابعنا على فيسبوك</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <h2 class="section-title">من نحن</h2>
+    <p class="lead-sm">Out of Line منصة شبابية تهدف لتمكين الشباب من خلال محتوى واقعي، فرص تطبيقية، وتدريب عملي. نؤمن أن التجربة العملية أهم خطوة لبناء مسيرة مهنية ناجحة.</p>
+
+    <div class="about-grid mt-6">
+      <article class="about-article">
+        <h4>فكرة المنصة</h4>
+        <p>بدأنا لأننا شفنا فجوة بين التعليم النظري وسوق العمل. هدفنا نطبّق مهارات حقيقية في مشاريع فعلية—مش امتحانات أو شهادات كلامية فقط. كل محتوى وكل كورس بنقدمه معمول عشان يخليك تقدر تشتغل وتقدّم نتيجة ملموسة.</p>
+        <p class="small-muted mt-3">نقدّم دورات مركزة، مهام تطبيقية، وورش قصيرة عشان تشتغل على مشاريع حقيقية وتبني بورتفوليو يُعرض.</p>
+      </article>
+
+      <article class="about-article">
+        <h4>المهمة والرؤية</h4>
+        <p>مهمتنا تمكين الشباب بالمهارات العملية والمعرفة اللازمة للتميز. رؤيتنا مجتمع شبابي قادر يصنع فرصه، يبني مشاريعه، ويأثر بإيجابية على محيطه—مهارات وتطبيق وتأثير لا أقل ولا أكثر.</p>
+        <p class="small-muted mt-3">نؤمن بالعمل المشترك، الشفافية، وتشجيع التجربة والخطأ كجزء من عملية التعلم.</p>
+      </article>
+
+      <article class="about-article">
+        <h4>كيف نعمل</h4>
+        <p>نمشي بمراحل: اكتشاف، تدريب تطبيقي، تنفيذ مشروع عملي، ودعم عرض الخبرة. نعطي المتطوعين فرصًا للتعلم ضمن فرق حقيقية، ومع المتفوقين نوفّر فرص عمل أو مشاريع مدفوعة لاحقًا.</p>
+        <p class="small-muted mt-3">لو كنت طالب أو خريج أو حتى فريلانسر عايز تتعلم وتتطوّر — هتلاقي مكانك معانا.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- FIELDS -->
+<section id="fields">
+  <div class="container">
+    <h2 class="section-title">المجالات</h2>
+    <p class="lead-sm">نفتح باب التقديم لمجالات متنوعة تقدر تطوّر فيها مهاراتك وتشارك فعليًا في إنتاج المحتوى وتنفيذ المشاريع.</p>
+
+    <div class="fields-grid mt-6">
+      <div class="field-card">
+        <img class="field-media" src="https://images.unsplash.com/photo-1492724441997-5dc865305da7?auto=format&fit=crop&w=1200&q=80" alt="Public Relations">
+        <div class="field-body">
+          <h4>Public Relations (PR)</h4>
+          <p>بناء علاقات مع مؤسسات وشركاء وميديا، كتابة بيانات صحفية، وترتيب شراكات وفعاليات لرفع صيت المنصة وجذب فرص تعاون.</p>
+        </div>
+      </div>
+
+      <div class="field-card">
+        <img class="field-media" src="https://images.pexels.com/photos/1170412/pexels-photo-1170412.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="HR">
+        <div class="field-body">
+          <h4>Human Resources (HR)</h4>
+          <p>انتقاء المتطوعين، متابعة الأداء، وضع أدوار واضحة، وتطوير خطة تدريب داخلية لضمان بيئة عمل منظمة وفعّالة.</p>
+        </div>
+      </div>
+
+      <div class="field-card">
+        <img class="field-media" src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1200&q=80" alt="Video Editing">
+        <div class="field-body">
+          <h4>Video Editing</h4>
+          <p>مونتاج ريلز وفيديوهات تعريفية وتعليمية. نحتاج محررين يعرفوا يختاروا المشاهد، يضبطوا الصوت والألوان، ويطلعوا فيديو جذاب ونظيف للنشر.</p>
+        </div>
+      </div>
+
+      <div class="field-card">
+        <img class="field-media" src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?auto=format&fit=crop&w=1200&q=80" alt="Voice Over">
+        <div class="field-body">
+          <h4>Voice Over</h4>
+          <p>أصوات احترافية للتعليق على الفيديوهات والدروس. لو صوتك واضح وتقنيتك بتاعة تسجيل كويسة — المجال مفتوح للتعاون وإضافة قيمة للمحتوى.</p>
+        </div>
+      </div>
+
+      <div class="field-card">
+        <img class="field-media" src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=80" alt="Graphic Design">
+        <div class="field-body">
+          <h4>Graphic Design</h4>
+          <p>تصميم بوستات، كفرات، سلايدات، وقوالب للـ social. مطلوب ذوق بصري وقدرة على الحفاظ على هوية بصرية ثابتة للمنصة.</p>
+        </div>
+      </div>
+
+      <div class="field-card">
+        <img class="field-media" src="https://images.pexels.com/photos/1092644/pexels-photo-1092644.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Social Media">
+        <div class="field-body">
+          <h4>Social Media Management</h4>
+          <p>وضع استراتيجيات نشر، جدولة المحتوى، إدارة المجتمع، وتحليل الأداء لزيادة التفاعل ونمو قاعدة المتابعين.</p>
+        </div>
+      </div>
+
+      <div class="field-card">
+        <img class="field-media" src="https://images.unsplash.com/photo-1496307042754-b4aa456c4a2d?auto=format&fit=crop&w=1200&q=80" alt="Marketing">
+        <div class="field-body">
+          <h4>Marketing</h4>
+          <p>تخطيط حملات رقمية، تصميم استراتيجيات نمو، وقياس نتائج الحملات لتحويل المهتمين لمتطوعين أو مشتركين في الكورسات.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COURSES -->
+<section id="courses">
+  <div class="container">
+    <h2 class="section-title">الكورسات</h2>
+    <p class="lead-sm">كورسات عملية ومركزة عشان تكتسب مهارة حقيقية ترفعها في البورتفوليو.</p>
+
+    <div class="courses-grid mt-6">
+      <div class="course-card">
+        <img class="course-media" src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=1200&q=80" alt="Self Development">
+        <div class="course-body">
+          <h3>تطوير الذات — مجاني</h3>
+          <p class="small-muted">دورة عملية لبناء العادات، إدارة الوقت، الذكاء العاطفي، والتخطيط الشخصي. تهدف لتجهيزك للتعامل مع تحديات الدراسة والشغل.</p>
+          <ul class="small-muted" style="margin-top:10px">
+            <li>خطة تطوير شخصية 6 أسابيع</li>
+            <li>جلسات تفاعلية وتمارين تطبيقية</li>
+            <li>مجموعة دعم ومتابعة</li>
+          </ul>
+        </div>
+        <div class="course-footer">
+          <div class="small-muted">المدة: 6 أسابيع — مجاني</div>
+          <a class="btn-green" href="https://wa.me/message/QCEEURFDYPLYH1" target="_blank" rel="noopener" aria-label="سجل في دورة تطوير الذات">احجز الآن</a>
+        </div>
+      </div>
+
+      <div class="course-card">
+        <img class="course-media" src="https://images.pexels.com/photos/7948063/pexels-photo-7948063.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Data Analysis">
+        <div class="course-body">
+          <h3>تحليل البيانات — Data Analysis</h3>
+          <p class="small-muted">كورس عملي 8 أسابيع يتضمن Excel متقدم، تنظيف بيانات، Pivot Tables، Power BI للتصور، ومشروع عملي لتحليل حالة حقيقية.</p>
+          <ul class="small-muted" style="margin-top:10px">
+            <li>تنظيف ومعالجة البيانات</li>
+            <li>تصور البيانات وdashboards</li>
+            <li>مشروع عملي وتقرير قابل للعرض</li>
+          </ul>
+        </div>
+        <div class="course-footer">
+          <div class="small-muted">المدة: 8 أسابيع</div>
+          <a class="btn-green" href="https://wa.me/message/QCEEURFDYPLYH1" target="_blank" rel="noopener" aria-label="سجل في دورة تحليل البيانات">احجز الآن</a>
+        </div>
+      </div>
+
+      <div class="course-card">
+        <img class="course-media" src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1200&q=80" alt="Soft Skills">
+        <div class="course-body">
+          <h3>Soft Skills — المهارات الناعمة</h3>
+          <p class="small-muted">دورة 6 أسابيع لتقوية مهارات العرض، التفاوض، القيادة، العمل الجماعي، والتحضير للمقابلات المهنية.</p>
+          <ul class="small-muted" style="margin-top:10px">
+            <li>العرض والتقديم Public Speaking</li>
+            <li>الذكاء العاطفي والتواصل الفعّال</li>
+            <li>بناء سيرة ذاتية احترافية</li>
+          </ul>
+        </div>
+        <div class="course-footer">
+          <div class="small-muted">المدة: 6 أسابيع</div>
+          <a class="btn-green" href="https://wa.me/message/QCEEURFDYPLYH1" target="_blank" rel="noopener" aria-label="سجل في دورة المهارات الناعمة">احجز الآن</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MID BANNER -->
+<section class="mid-banner">
+  <div class="container mid-banner-content">
+    <img src="https://i.ibb.co/mFBxvqmy/join-community.jpg" alt="Out of Line Logo" class="mid-banner-logo">
+    <h3>انضم إلى مجتمع Out of Line</h3>
+    <p>سجل الآن في منصتنا الشبابية واستفد من الفرص التعليمية والتدريبية المميزة. ابدأ رحلتك لبناء مستقبلك المهني وتطوير مهاراتك العملية مع فريق من الشباب الطموح.</p>
+    <a href="https://forms.gle/BUGca4L9zYtT1sPD6" class="join-btn" target="_blank" rel="noopener">
+      انضم الآن
+    </a>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <h2 class="section-title">تواصل معانا</h2>
+    <p class="lead-sm">لديك استفسار أو ترغب في الانضمام لفريق المتطوعين؟ تواصل معنا مباشرة.</p>
+
+    <div class="contact-grid mt-6">
+      <div class="contact-card">
+        <div class="contact-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+          </svg>
+        </div>
+        <h4>البريد الإلكتروني</h4>
+        <p>للتواصل العام أو الاستفسارات عن الكورسات والفرص</p>
+        <a href="mailto:outofline.eg@gmail.com">outofline.eg@gmail.com</a>
+      </div>
+
+      <div class="contact-card">
+        <div class="contact-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M17 2H7C5.9 2 5 2.9 5 4v16c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-5 17c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm5-4H7V4h10v11z"/>
+          </svg>
+        </div>
+        <h4>واتساب</h4>
+        <p>للتواصل المباشر أو الاستفسارات الفورية</p>
+        <a href="https://wa.me/message/QCEEURFDYPLYH1" target="_blank" rel="noopener">تواصل على واتساب</a>
+      </div>
+
+      <div class="contact-card">
+        <div class="contact-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h-2v-6h2v6zm0-8h-2V7h2v2zm5 5h-2v-2h2v2zm0-3h-2v-2h2v2z"/>
+          </svg>
+        </div>
+        <h4>قناة واتساب</h4>
+        <p>تابع آخر أخبارنا وتحديثاتنا على قناتنا</p>
+        <a href="https://whatsapp.com/channel/0029VbBHTEV3GJP3dQAdl61z" target="_blank" rel="noopener">انضم للقناة</a>
+      </div>
+
+      <div class="contact-card">
+        <div class="contact-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/>
+          </svg>
+        </div>
+        <h4>الفيسبوك</h4>
+        <p>تابعنا على فيسبوك لمحتوى حصري وأحداث</p>
+        <a href="https://www.facebook.com/share/1AtBTt7dhN/" target="_blank" rel="noopener">صفحتنا على فيسبوك</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- footer -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <h3 style="margin-top:0">Out of Line</h3>
+      <p class="muted-white">منصة شبابية تقدم محتوى واقعي، فرص تعليمية، وكورسات عملية لتمكين الشباب وبناء مستقبل أفضل.</p>
+      <div class="social-links">
+        <a href="https://www.facebook.com/share/1AtBTt7dhN/" target="_blank" rel="noopener" aria-label="فيسبوك">
+          <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M14 13.5h2.5l1-4H14v-2c0-1.03 0-2 2-2h1.5V2.14c-.326-.043-1.557-.14-2.857-.14C11.928 2 10 3.657 10 6.7v2.8H7v4h3V22h4v-8.5z"/>
+          </svg>
+        </a>
+        <a href="https://wa.me/message/QCEEURFDYPLYH1" target="_blank" rel="noopener" aria-label="واتساب">
+          <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M17 2H7C5.9 2 5 2.9 5 4v16c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-5 17c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm5-4H7V4h10v11z"/>
+          </svg>
+        </a>
+        <a href="https://whatsapp.com/channel/0029VbBHTEV3GJP3dQAdl61z" target="_blank" rel="noopener" aria-label="قناة واتساب">
+          <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h-2v-6h2v6zm0-8h-2V7h2v2zm5 5h-2v-2h2v2zm0-3h-2v-2h2v2z"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    <div>
+      <h4 style="margin-top:0">روابط سريعة</h4>
+      <p class="muted-white"><a href="#home" style="color:rgba(255,255,255,0.85);text-decoration:none">الرئيسية</a></p>
+      <p class="muted-white"><a href="#about" style="color:rgba(255,255,255,0.85);text-decoration:none">من نحن</a></p>
+      <p class="muted-white"><a href="#courses" style="color:rgba(255,255,255,0.85);text-decoration:none">الكورسات</a></p>
+      <p class="muted-white"><a href="#fields" style="color:rgba(255,255,255,0.85);text-decoration:none">المجالات</a></p>
+      <p class="muted-white"><a href="#contact" style="color:rgba(255,255,255,0.85);text-decoration:none">تواصل</a></p>
+    </div>
+
+    <div>
+      <h4 style="margin-top:0">تواصل معنا</h4>
+      <p class="muted-white">البريد الإلكتروني:<br><a href="mailto:outofline.eg@gmail.com" style="color:rgba(255,255,255,0.85);text-decoration:none">outofline.eg@gmail.com</a></p>
+      <p class="muted-white">واتساب:<br><a href="https://wa.me/message/QCEEURFDYPLYH1" target="_blank" rel="noopener" style="color:rgba(255,255,255,0.85);text-decoration:none">+20 102 333 4444</a></p>
+      <p class="muted-white">القاهرة، مصر</p>
+    </div>
+  </div>
+  <div class="container" style="margin-top:40px;padding-top:20px;border-top:1px solid rgba(255,255,255,0.1);">
+    <p class="muted-white center" style="margin:0">© 2023 Out of Line. جميع الحقوق محفوظة.</p>
+  </div>
+</footer>
+
+<div class="back-to-top" id="backToTop">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 19V5M5 12l7-7 7 7"/>
+  </svg>
+</div>
+
+<script>
+  // Mobile menu toggle
+  const mobileToggle = document.getElementById('mobileToggle');
+  const mobileMenu = document.getElementById('mobileMenu');
+  
+  mobileToggle.addEventListener('click', () => {
+    mobileMenu.style.display = mobileMenu.style.display === 'block' ? 'none' : 'block';
+  });
+  
+  // Close mobile menu when clicking a link
+  const mobileLinks = document.querySelectorAll('.mobile-link');
+  mobileLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      mobileMenu.style.display = 'none';
+    });
+  });
+  
+  // Header scroll effect
+  const header = document.getElementById('mainHeader');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 100) {
+      header.classList.add('header-scrolled');
+    } else {
+      header.classList.remove('header-scrolled');
+    }
+  });
+  
+  // Back to top button
+  const backToTopBtn = document.getElementById('backToTop');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 300) {
+      backToTopBtn.classList.add('visible');
+    } else {
+      backToTopBtn.classList.remove('visible');
+    }
+  });
+  
+  backToTopBtn.addEventListener('click', () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  });
+  
+  // Active menu item on scroll
+  const sections = document.querySelectorAll('section');
+  const navLinks = document.querySelectorAll('nav.desktop a');
+  
+  window.addEventListener('scroll', () => {
+    let current = '';
+    
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop;
+      const sectionHeight = section.clientHeight;
+      
+      if (pageYOffset >= (sectionTop - sectionHeight / 3)) {
+        current = section.getAttribute('id');
+      }
+    });
+    
+    navLinks.forEach(link => {
+      link.classList.remove('active');
+      if (link.getAttribute('href').substring(1) === current) {
+        link.classList.add('active');
+      }
+    });
+  });
+</script>
+</body>
+</html>
